@@ -1,3 +1,4 @@
+import { parallelLimit } from "async";
 import * as asyncRetry from "async-retry";
 import { extname } from "path";
 import { labelValues } from "prom-client";
@@ -5,9 +6,8 @@ import * as puppeteer from "puppeteer";
 import { IWebBrowserBatchOptions, IWebBrowserOptions, toLoadEvent } from "./browser_options";
 import { IConfigBrowser, IOutputOptions } from "./config";
 import metrics from "./metrics";
-import { parallelLimit } from "async";
 import {
-    asyncParallelLimit, asyncWriteFile, ensureBaseDirectoryAsync,
+    asyncWriteFile, ensureBaseDirectoryAsync,
     isSuccessfulHttpCode, isTerminalHttpCode,
 } from "./util";
 
@@ -42,11 +42,12 @@ export class WebBrowser {
             });
         }
         try {
+            // TODO: This may or may not be blocking.
             await parallelLimit(taskList, options.browser.tabs);
         }
         catch (e) {
             // tslint:disable-next-line:no-console
-            console.log("Error in asyncParallelLimit(). Error: " + e);
+            console.log("Error in parallelLimit(). Error: " + e);
         }
     }
 

@@ -32,11 +32,13 @@ class App {
     }
 
     private parseArgs(): void {
+        console.log("Args: " + process.argv);
         commander
             .version("1.1.0")
             .description("A server that will periodically download web content and store it in "
                 + "text, PDF, JPEG, and PNG format.")
             .option("-c, --config [path]", "Configuration File, defaults to [config.yaml]", "config.yaml")
+            .allowUnknownOption()
             .parse(process.argv);
     }
 

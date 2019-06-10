@@ -1,6 +1,6 @@
 ---
 - name: "Fast Changing News"
-  outputDirectory: "/home/webcron/output/news/"
+  outputDirectory: "/tmp/output/news/"
   format: ["txt"]
   # https://crontab.guru/every-30-minutes
   schedule: "*/5 * * * *"

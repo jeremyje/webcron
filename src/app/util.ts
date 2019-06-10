@@ -1,4 +1,3 @@
-import { parallelLimit } from "async";
 import { existsSync, writeFile } from "fs";
 import { mkdir } from "mkdir-recursive";
 import { dirname } from "path";
@@ -39,7 +38,6 @@ export function isTerminalHttpCode(httpCode: number): boolean {
 }
 
 export const asyncWriteFile = promisify(writeFile);
-export const asyncParallelLimit = promisify(parallelLimit);
 
 export function weakRandomString(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);

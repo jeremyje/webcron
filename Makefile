@@ -31,11 +31,15 @@ endif
 
 all: build build-images
 
-build: node_modules/
+build: dist/
+dist/: node_modules/
 	$(NPM) run build
 
 test: node_modules/
 	NODE_ENV=test $(NPM) run test
+
+run: dist/
+	$(NPM) run serve
 
 node_modules/: build/toolchain/nodejs/
 	$(NPM) install --save
@@ -85,7 +89,7 @@ clean-node:
 	rm -rf $(REPOSITORY_ROOT)/coverage/
 	rm -rf $(REPOSITORY_ROOT)/dist/
 
-run: build-debian-image
+run-image: build-debian-image
 	docker run --name webcron --interactive --tty -p 18080:3000 webcron:$(TAG)
 
 build/archives/$(NODEJS_PACKAGE_NAME):
@@ -102,4 +106,4 @@ else
 	cd $(TOOLCHAIN_DIR)/nodejs/ && tar xzf $(ARCHIVES_DIR)/$(NODEJS_PACKAGE_NAME) --strip-components 1
 endif
 
-.PHONY: all push-images push-debian-image push-alpine-image build-images build-debian-image build-alpine-image clean clean-images clean-debian-image clean-alpine-image run
+.PHONY: all push-images push-debian-image push-alpine-image build-images build-debian-image build-alpine-image run-image clean clean-images clean-debian-image clean-alpine-image run build test
