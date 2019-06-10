@@ -3,6 +3,7 @@
   "rules": {
     "class-name": true,
     "no-shadowed-variable": false,
+    "no-console": [false, "log", "error"],
     "comment-format": [
       true,
       "check-space"

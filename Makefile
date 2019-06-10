@@ -77,17 +77,18 @@ clean-alpine-image:
 clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
 
-clean-dist:
 clean-toolchain:
 	rm -rf $(TOOLCHAIN_DIR)
 
 clean-archives:
 	rm -rf $(ARCHIVES_DIR)
 
-clean-node:
+clean-dist:
+	rm -rf $(REPOSITORY_ROOT)/dist/
+
+clean-node: clean-dist
 	rm -rf $(REPOSITORY_ROOT)/node_modules/
 	rm -rf $(REPOSITORY_ROOT)/coverage/
-	rm -rf $(REPOSITORY_ROOT)/dist/
 
 run-image: build-debian-image
 	docker run --name webcron --interactive --tty -p 18080:3000 webcron:$(TAG)
