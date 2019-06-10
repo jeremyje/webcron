@@ -1,7 +1,7 @@
-language: node_js
-node_js:
-  - "10"
-cache: npm
+#language: node_js
+#node_js:
+#  - "10"
+#cache: npm
 services:
   - docker
 
@@ -13,5 +13,8 @@ addons:
 
 script:
 - make clean
-- make all
+- make build
 - make test
+- make build-images
+# https://docs.travis-ci.com/user/docker/#pushing-a-docker-image-to-a-registry
+#- make push-images

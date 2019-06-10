@@ -9,7 +9,7 @@ RUN apt-get update \
       libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
       libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation \
       libappindicator1 libnss3 lsb-release xdg-utils wget \
-      build-essential \
+      build-essential curl \
   && rm -rf /var/cache/apk/*
 RUN useradd --create-home --home-dir /home/webcron --shell /bin/bash webcron
 
@@ -18,9 +18,15 @@ RUN chown -R webcron /home/webcron
 WORKDIR /home/webcron
 USER webcron
 
+# Docker Image Arguments
+ARG BUILD_DATE
+ARG VCS_REF
+ARG BUILD_VERSION
+
 COPY --chown=webcron:webcron . .
-RUN make build
-RUN make test
+RUN make SHORT_SHA=${VCS_REF} clean-build
+RUN make SHORT_SHA=${VCS_REF} build
+RUN make SHORT_SHA=${VCS_REF} test
 
 ENV PORT 3000
 EXPOSE 3000
@@ -28,10 +34,6 @@ EXPOSE 3000
 ENTRYPOINT ["npm", "run"]
 CMD ["serve"]
 
-# Docker Image Arguments
-ARG BUILD_DATE
-ARG VCS_REF
-ARG BUILD_VERSION
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
     version="1.2.0" \

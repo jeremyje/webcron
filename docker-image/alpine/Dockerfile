@@ -1,29 +1,34 @@
 #FROM node:10.16-alpine
 FROM alpine:latest
 
+
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
 RUN apk update && apk upgrade && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
-    apk add --no-cache \
-      chromium@edge \
-      nss@edge \
-      make
+    apk add --no-cache chromium@edge nss@edge make curl
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 RUN addgroup webcron
-RUN adduser -S -G node -s /bin/bash -h /home/webcron webcron
-
+RUN adduser -S -s /bin/bash -h /home/webcron webcron
+#-G node 
 RUN chown -R webcron /home/webcron
 
 WORKDIR /home/webcron
 USER webcron
 
+
+# Docker Image Arguments
+ARG BUILD_DATE
+ARG VCS_REF
+ARG BUILD_VERSION
+
 COPY --chown=webcron:webcron . .
-RUN make build
-RUN make test
+RUN make SHORT_SHA=${VCS_REF} clean-build
+RUN make SHORT_SHA=${VCS_REF} build
+RUN make SHORT_SHA=${VCS_REF} test
 
 ENV PORT 3000
 EXPOSE 3000
@@ -31,10 +36,6 @@ EXPOSE 3000
 ENTRYPOINT ["npm"]
 CMD ["run", "serve"]
 
-# Docker Image Arguments
-ARG BUILD_DATE
-ARG VCS_REF
-ARG BUILD_VERSION
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
     version="1.2.0" \

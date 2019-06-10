@@ -42,15 +42,19 @@ run: dist/
 	$(NPM) run serve
 
 node_modules/: build/toolchain/nodejs/
+	-which node
+	-which npm
+	echo $(PATH)
 	$(NPM) install --save
 	$(NPM) install --only=dev
 
 push-images: push-debian-image push-alpine-image
-push-debian-image:
+
+push-debian-image: build-debian-image
 	docker push $(REGISTRY)/webcron:$(TAG)
 	docker push $(REGISTRY)/webcron:$(ALTERNATE_TAG)
 
-push-alpine-image:
+push-alpine-image: build-alpine-image
 	docker push $(REGISTRY)/webcron-alpine:$(TAG)
 	docker push $(REGISTRY)/webcron-alpine:$(ALTERNATE_TAG)
 
