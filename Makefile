@@ -57,10 +57,10 @@ push-alpine-image:
 build-images: build-debian-image build-alpine-image
 
 build-debian-image:
-	docker build -t jeremyje/webcron:$(TAG) -t jeremyje/webcron:$(ALTERNATE_TAG) -f Dockerfile.debian --build-arg BUILD_DATE=$BUILD_DATE --build-arg VCS_REF=$(SHORT_SHA) .
+	docker build -t jeremyje/webcron:$(TAG) -t jeremyje/webcron:$(ALTERNATE_TAG) -f docker-image/debian/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
 
 build-alpine-image:
-	docker build -t jeremyje/webcron:$(TAG)-alpine -t jeremyje/webcron:$(ALTERNATE_TAG)-alpine -f Dockerfile.alpine --build-arg BUILD_DATE=$BUILD_DATE --build-arg VCS_REF=$(SHORT_SHA) .
+	docker build -t jeremyje/webcron:$(TAG)-alpine -t jeremyje/webcron:$(ALTERNATE_TAG)-alpine -f docker-image/alpine/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
 
 clean: clean-images clean-build
 
