@@ -1,4 +1,10 @@
 # Webcron
+
+[![Build Status](https://img.shields.io/travis/com/jeremyje/webcron.svg?style=popout-square)](https://travis-ci.com/jeremyje/webcron)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=popout-square)](https://github.com/jeremyje/webcron/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release-pre/jeremyje/webcron.svg?style=popout-square)](https://github.com/jeremyje/webcron/releases)
+![GitHub issues](https://img.shields.io/github/issues/jeremyje/webcron.svg?style=popout-square)
+
 A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format.
 
 This service can be run via Docker container (recommended) or by npm.
