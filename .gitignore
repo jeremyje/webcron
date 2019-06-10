@@ -4,3 +4,8 @@ db/
 dist/
 node_modules/
 output/
+webcron-alpine
+webcron-linux
+webcron-macos
+webcron-win.exe
+*.exe

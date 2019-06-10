@@ -31,7 +31,17 @@ endif
 
 all: build build-images
 
-build: dist/
+build: dist/ binaries
+binaries: webcron-alpine webcron-linux
+
+webcron-alpine: dist/
+	$(NPM) install pkg
+	pkg . --targets=alpine
+
+webcron-linux: dist/
+	$(NPM) install pkg
+	pkg . --targets=linux
+
 dist/: node_modules/
 	$(NPM) run build
 
@@ -81,6 +91,12 @@ clean-alpine-image:
 clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
 
+clean-binaries:
+	rm -f webcron-linux
+	rm -f webcron-alpine
+	rm -f webcron-macos
+	rm -f webcron-win.exe
+
 clean-toolchain:
 	rm -rf $(TOOLCHAIN_DIR)
 
@@ -90,7 +106,7 @@ clean-archives:
 clean-dist:
 	rm -rf $(REPOSITORY_ROOT)/dist/
 
-clean-node: clean-dist
+clean-node: clean-dist clean-binaries
 	rm -rf $(REPOSITORY_ROOT)/node_modules/
 	rm -rf $(REPOSITORY_ROOT)/coverage/
 

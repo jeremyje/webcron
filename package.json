@@ -2,6 +2,7 @@
   "name": "webcron",
   "version": "1.1.0",
   "description": "Webcron is a server that will periodically download web content and store it in text, PDF, JPEG, and PNG format.",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "start": "npm run build && npm run watch",
@@ -35,8 +36,8 @@
   "dependencies": {
     "async": "^3.0.1",
     "async-retry": "^1.2.3",
-    "compression": "^1.7.4",
     "commander": "^2.20.0",
+    "compression": "^1.7.4",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "express-prom-bundle": "^5.1.5",
@@ -45,6 +46,7 @@
     "mkdir-recursive": "^0.4.0",
     "morgan": "^1.9.1",
     "node-cron": "^2.0.3",
+    "pkg": "^4.4.0",
     "prom-client": "^11.5.0",
     "puppeteer": "^1.17.0",
     "request": "^2.88.0",
@@ -74,5 +76,9 @@
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "tslint": "^5.17.0"
+  },
+  "bin": "dist/server.js",
+  "pkg": {
+    "assets": "dist/**/*"
   }
 }
