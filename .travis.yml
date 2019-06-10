@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "10"
+cache: npm
+services:
+  - docker
+
+script:
+- make clean
+- make all
+- make test

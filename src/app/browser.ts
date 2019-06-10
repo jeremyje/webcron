@@ -179,8 +179,8 @@ function toPDFFormat(format: string): puppeteer.PDFFormat {
             return "Letter";
         case "legal":
             return "Legal";
-        case "tabload":
-            return "Tabload";
+        case "tabloid":
+            return "Tabloid";
         case "ledger":
             return "Ledger";
         case "A0":

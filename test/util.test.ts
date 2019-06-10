@@ -3,6 +3,10 @@ import { existsSync, rmdirSync } from "fs";
 import * as util from "../src/app/util";
 
 test("isProduction", () => {
+    assert.equal(process.env.NODE_ENV, "test");
+});
+
+test("isProduction", () => {
     assert.equal(util.isProduction(), false);
 });
 

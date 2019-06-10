@@ -29,13 +29,13 @@ else
 	endif
 endif
 
-all: build-images
+all: build build-images
 
 build: node_modules/
 	$(NPM) run build
 
 test: node_modules/
-	$(NPM) run test
+	NODE_ENV=test $(NPM) run test
 
 node_modules/: build/toolchain/nodejs/
 	$(NPM) install --save
@@ -70,17 +70,20 @@ clean-alpine-image:
 	docker rmi -f jeremyje/webcron-alpine:$(TAG)
 	docker rmi -f jeremyje/webcrona-alpine:$(ALTERNATE_TAG)
 
-clean-build: clean-toolchain clean-archives clean-node-modules
+clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
 
+clean-dist:
 clean-toolchain:
 	rm -rf $(TOOLCHAIN_DIR)
 
 clean-archives:
 	rm -rf $(ARCHIVES_DIR)
 
-clean-node-modules:
+clean-node:
 	rm -rf $(REPOSITORY_ROOT)/node_modules/
+	rm -rf $(REPOSITORY_ROOT)/coverage/
+	rm -rf $(REPOSITORY_ROOT)/dist/
 
 run: build-debian-image
 	docker run --name webcron --interactive --tty -p 18080:3000 webcron:$(TAG)
