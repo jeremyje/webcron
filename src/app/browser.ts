@@ -5,6 +5,7 @@ import * as puppeteer from "puppeteer";
 import { IWebBrowserBatchOptions, IWebBrowserOptions, toLoadEvent } from "./browser_options";
 import { IConfigBrowser, IOutputOptions } from "./config";
 import metrics from "./metrics";
+import { parallelLimit } from "async";
 import {
     asyncParallelLimit, asyncWriteFile, ensureBaseDirectoryAsync,
     isSuccessfulHttpCode, isTerminalHttpCode,
@@ -41,7 +42,7 @@ export class WebBrowser {
             });
         }
         try {
-            await asyncParallelLimit(taskList, options.browser.tabs);
+            await parallelLimit(taskList, options.browser.tabs);
         }
         catch (e) {
             // tslint:disable-next-line:no-console
