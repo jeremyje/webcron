@@ -1,0 +1,19 @@
+---
+- name: "Fast Changing News"
+  outputDirectory: "/home/webcron/output/news/"
+  format: ["txt"]
+  # https://crontab.guru/every-30-minutes
+  schedule: "*/5 * * * *"
+  browser:
+    flags: []
+    headless: true
+    timeout: 60000
+    tabs: 3
+    width: 1920
+    height: 1080
+    # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
+    waitUntil: "domcontentloaded"
+    verbose: true
+  urls:
+    - https://twitter.com/search?q=news&src=typd&lang=en
+    - https://www.youtube.com/feed/trending

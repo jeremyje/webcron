@@ -1,0 +1,34 @@
+---
+- name: "Example"
+  outputDirectory: "output/"
+  format: ["txt"]
+  # https://crontab.guru/every-30-minutes
+  schedule: "*/30 * * * *"
+  browser:
+    attempts: 10
+    flags: []
+    headless: true
+    height: 1080
+    output:
+      displayHeaderFooter: false
+      fullPage: true
+      landscape: false
+      pdfFormat: "A4"
+      printBackground: false
+      quality: 100
+      scale: 1
+      textEncoding: utf8
+    retryFactor: 1.3
+    tabs: 6
+    timeout: 5000
+    verbose: true
+    # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
+    waitUntil: "networkidle2"
+    width: 1920
+  urls:
+    - http://server:11010/index.html
+    - http://userver2:8080/server/appdata/swagger/
+    - http://iot.futonredemption.com:8181/
+    - http://pi1/home/pi/server/appdata/swagger/
+    - http://quartz:9182/metrics
+  servePath: "/internal/"

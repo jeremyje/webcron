@@ -1,0 +1,150 @@
+---
+- name: "Fast Changing News"
+  outputDirectory: "/home/webcron/output/fast-news/"
+  format: ["txt"]
+  # https://crontab.guru/every-30-minutes
+  schedule: "*/5 * * * *"
+  browser:
+    flags: []
+    headless: true
+    timeout: 60000
+    tabs: 3
+    width: 1920
+    height: 1080
+    # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
+    waitUntil: "domcontentloaded"
+    verbose: true
+  urls:
+    - https://twitter.com/search?q=news&src=typd&lang=en
+    - https://www.youtube.com/feed/trending
+  servePath: /fast-news
+
+- name: "News"
+  outputDirectory: "/home/webcron/output/news/"
+  format: ["txt"]
+  # https://crontab.guru/every-30-minutes
+  schedule: "*/30 * * * *"
+  browser:
+    flags: []
+    headless: true
+    timeout: 60000
+    tabs: 3
+    width: 1920
+    height: 1080
+    # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
+    waitUntil: "domcontentloaded"
+    verbose: true
+  urls:
+    - https://www.dailysnark.com/
+    - http://jamaica-gleaner.com/
+    - https://www.thehill.com/
+    - http://time.com/
+    - http://www.chicagotribune.com/
+    - http://www.chinadaily.com.cn/
+    - http://www.dailymail.co.uk/ushome/index.html
+    - http://www.latimes.com/
+    - http://www.msnbc.com/
+    - http://www.nydailynews.com/
+    - http://www.rollcall.com/
+    - https://abcnews.go.com/
+    - https://nationalinterest.org/
+    - https://nypost.com/
+    - https://sputniknews.com/
+    - https://wn.com/
+    - https://www.aljazeera.com/
+    - https://www.bbc.com/news
+    - https://www.bloomberg.com/
+    - https://www.bostonglobe.com/
+    - https://www.breitbart.com/
+    - https://www.businessinsider.com/
+    - https://www.cbsnews.com/
+    - https://www.cnn.com/
+    - https://www.dailywire.com/
+    - https://www.debka.com/
+    - https://www.drudgereport.com/
+    - https://www.forbes.com
+    - https://www.foxnews.com/
+    - https://www.huffingtonpost.com/
+    - https://www.indiatimes.com/
+    - https://www.mcclatchydc.com/
+    - https://www.nbcnews.com/
+    - https://www.npr.org/
+    - https://www.nytimes.com/
+    - https://www.reddit.com/
+    - https://www.reuters.com/
+    - https://www.seattletimes.com/
+    - https://www.theatlantic.com/
+    - https://www.thedailybeast.com/
+    - https://www.theepochtimes.com/
+    - https://www.theguardian.com/us
+    - https://www.trinidadexpress.com/
+    - https://www.usatoday.com/
+    - https://www.voanews.com/
+    - https://www.vox.com/
+    - https://www.washingtonpost.com/
+    - https://www.worldcrunch.com/
+    - https://www.wsj.com/
+    - https://www.yahoo.com/news/
+    - http://www.cbc.ca/
+    - https://www.newsweek.com/
+    - https://www.infowars.com/
+    - https://news.google.com/
+    - https://www.buzzfeed.com/
+    - https://defence-blog.com/
+    - http://www.worldaffairsjournal.org/
+    - http://justworldeducational.org/category/blog/
+    - https://timesofindia.indiatimes.com/world
+    - https://www.ndtv.com/world-news
+    - https://www.rt.com/news/
+    - https://www.independent.co.uk/us
+    - https://www.cnbc.com/world/
+    - https://www.mirror.co.uk/news/world-news/
+    - https://www.express.co.uk/news/world
+    - https://www.msn.com/
+    - http://www.espn.com/
+    - https://en.wikinews.org/wiki/Main_Page
+    - https://www.ap.org/en-us/
+    - http://www.pewresearch.org/
+    - https://www.theblaze.com/
+    - https://www.poynter.org/
+    - https://www.propublica.org/
+    - https://www.worldlifestyle.com/
+    - https://thebrainypenny.com/
+    - https://www.actionnewsjax.com/
+    - http://www.sun-sentinel.com/
+    - https://www.news4jax.com/
+    - https://medium.com/
+    - https://medium.com/topic/politics
+    - https://www.realclearpolitics.com/
+    - https://www.politico.com/
+  servePath: /news
+
+- name: "Tech News"
+  outputDirectory: "/home/webcron/output/tech-news/"
+  format: ["txt"]
+  # https://crontab.guru/every-30-minutes
+  schedule: "*/30 * * * *"
+  browser:
+    flags: []
+    headless: true
+    timeout: 60000
+    tabs: 2
+    width: 1920
+    height: 1080
+    # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
+    waitUntil: "domcontentloaded"
+    verbose: true
+  urls:
+    - https://www.theverge.com/
+    - https://bgr.com/
+    - https://techcrunch.com/
+    - https://thenextweb.com/
+    - https://www.wired.com/
+    - https://mashable.com/
+    - https://gizmodo.com/
+    - https://www.techradar.com/
+    - https://www.macrumors.com/
+    - https://www.engadget.com/
+    - https://www.slashgear.com/
+    - https://www.droid-life.com/
+  servePath: /tech-news

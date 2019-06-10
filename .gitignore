@@ -1,0 +1,6 @@
+build/
+coverage/
+db/
+dist/
+node_modules/
+output/
