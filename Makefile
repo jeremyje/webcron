@@ -9,6 +9,7 @@ REPOSITORY_ROOT := ${CURDIR}
 TOOLCHAIN_DIR = $(REPOSITORY_ROOT)/build/toolchain
 ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
+REGISTRY = jeremyje
 
 NODEJS_VERSION = 10.16.0
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
