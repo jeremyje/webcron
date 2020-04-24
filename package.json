@@ -44,7 +44,7 @@
     "js-yaml": "^3.13.1",
     "lusca": "^1.6.1",
     "mkdir-recursive": "^0.4.0",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "node-cron": "^2.0.3",
     "pkg": "^4.4.0",
     "prom-client": "^11.5.0",
