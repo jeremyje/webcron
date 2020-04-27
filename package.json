@@ -34,7 +34,7 @@
   },
   "author": "Jeremy Edwards",
   "dependencies": {
-    "async": "^3.0.1",
+    "async": "^3.2.0",
     "async-retry": "^1.2.3",
     "commander": "^2.20.0",
     "compression": "^1.7.4",
