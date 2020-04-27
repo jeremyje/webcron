@@ -46,7 +46,7 @@
     "mkdir-recursive": "^0.4.0",
     "morgan": "^1.9.1",
     "node-cron": "^2.0.3",
-    "pkg": "^4.4.0",
+    "pkg": "^4.4.8",
     "prom-client": "^11.5.0",
     "puppeteer": "^1.17.0",
     "request": "^2.88.2",
