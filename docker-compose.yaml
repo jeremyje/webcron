@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  webcron-debian:
+    build:
+      context: .
+      dockerfile: docker-image/debian/Dockerfile
+    restart: always
+  webcron-alpine:
+    build:
+      context: .
+      dockerfile: docker-image/alpine/Dockerfile
+    restart: always

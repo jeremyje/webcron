@@ -1,11 +1,13 @@
+.vscode/
+*.exe
 build/
 coverage/
 db/
 dist/
 node_modules/
 output/
+webcron
 webcron-alpine
 webcron-linux
 webcron-macos
 webcron-win.exe
-*.exe
