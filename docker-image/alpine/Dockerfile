@@ -1,12 +1,10 @@
-#FROM node:10.16-alpine
 FROM alpine:latest
 
-
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md
-RUN apk update && apk upgrade && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
-    apk add --no-cache chromium@edge nss@edge make curl
+RUN apk update && apk upgrade \
+    && echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
+    && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
+    && apk add --no-cache chromium@edge nss@edge make curl
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
@@ -18,7 +16,6 @@ RUN chown -R webcron /home/webcron
 
 WORKDIR /home/webcron
 USER webcron
-
 
 # Docker Image Arguments
 ARG BUILD_DATE
@@ -38,7 +35,7 @@ CMD ["run", "serve"]
 
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
-    version="1.2.0" \
+    version="2.0.0" \
     description="A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format."
 
 # Standardized Docker Image Labels
@@ -50,7 +47,7 @@ LABEL \
     org.opencontainers.image.documentation="https://github.com/jeremyje/webcron/blob/master/README.md" \
     org.opencontainers.image.source="https://github.com/jeremyje/webcron.git" \
     org.opencontainers.image.version="${BUILD_VERSION}" \
-    org.opencontainers.image.revision="1" \
+    org.opencontainers.image.revision="2" \
     org.opencontainers.image.vendor="Jeremy Edwards" \
     org.opencontainers.image.licenses="Apache-2.0" \
     org.opencontainers.image.ref.name="" \

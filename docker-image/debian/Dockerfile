@@ -1,4 +1,3 @@
-#FROM node:10.16-stretch
 FROM debian:latest
 
 RUN apt-get update \
@@ -34,9 +33,8 @@ EXPOSE 3000
 ENTRYPOINT ["npm", "run"]
 CMD ["serve"]
 
-
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
-    version="1.2.0" \
+    version="2.0.0" \
     description="A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format."
 
 # Standardized Docker Image Labels
@@ -48,7 +46,7 @@ LABEL \
     org.opencontainers.image.documentation="https://github.com/jeremyje/webcron/blob/master/README.md" \
     org.opencontainers.image.source="https://github.com/jeremyje/webcron.git" \
     org.opencontainers.image.version="${BUILD_VERSION}" \
-    org.opencontainers.image.revision="1" \
+    org.opencontainers.image.revision="2" \
     org.opencontainers.image.vendor="Jeremy Edwards" \
     org.opencontainers.image.licenses="Apache-2.0" \
     org.opencontainers.image.ref.name="" \

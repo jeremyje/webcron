@@ -11,7 +11,7 @@ ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
 REGISTRY = jeremyje
 
-NODEJS_VERSION = 10.16.0
+NODEJS_VERSION = 12.16.2
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
 
 
@@ -31,6 +31,8 @@ else
 endif
 
 all: build build-images
+
+presubmit: clean build test build-debian-image
 
 build: dist/ binaries
 binaries: webcron-alpine webcron-linux
@@ -126,6 +128,7 @@ ifeq ($(suffix $(NODEJS_PACKAGE_NAME)),.zip)
 	cd $(TOOLCHAIN_DIR)/nodejs/ && unzip -q -o $(ARCHIVES_DIR)/$(NODEJS_PACKAGE_NAME)
 else
 	cd $(TOOLCHAIN_DIR)/nodejs/ && tar xzf $(ARCHIVES_DIR)/$(NODEJS_PACKAGE_NAME) --strip-components 1
+	ls -la $(TOOLCHAIN_DIR)/nodejs/bin/
 endif
 
 .PHONY: all push-images push-debian-image push-alpine-image build-images build-debian-image build-alpine-image run-image clean clean-images clean-debian-image clean-alpine-image run build test
