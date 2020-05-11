@@ -75,7 +75,7 @@
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2",
     "ts-jest": "^25.4.0",
-    "tslint": "^6.1.1"
+    "tslint": "^6.1.2"
   },
   "bin": "dist/server.js",
   "pkg": {
