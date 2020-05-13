@@ -1,7 +1,7 @@
 import { parallelLimit } from "async";
 import * as asyncRetry from "async-retry";
 import { extname } from "path";
-import { labelValues } from "prom-client";
+import { LabelValues } from "prom-client";
 import * as puppeteer from "puppeteer";
 import { IWebBrowserBatchOptions, IWebBrowserOptions, toLoadEvent } from "./browser_options";
 import { IConfigBrowser, IOutputOptions } from "./config";
@@ -87,7 +87,7 @@ export class WebBrowser {
         return status;
     }
     private async renderAsyncSingle(option: IWebBrowserOptions, browserOptions: IConfigBrowser): Promise<void> {
-        const finishFuncs = new Array<(labels?: labelValues) => void>();
+        const finishFuncs = new Array<(labels?: LabelValues<string>) => void>();
         metrics.RenderRequestCount.inc();
         let success = "false";
         const targetUrl = option.targetUrl;

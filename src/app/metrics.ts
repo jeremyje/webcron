@@ -3,13 +3,13 @@ import * as Prometheus from "prom-client";
 const collectDefaultMetrics = Prometheus.collectDefaultMetrics;
 
 class Metrics {
-    public readonly RenderRequestCount: Prometheus.Counter;
-    public readonly RenderRequestByStatusCount: Prometheus.Counter;
-    public readonly RenderRequestByAttemptCount: Prometheus.Counter;
-    public readonly RenderSuccessByAttemptCount: Prometheus.Counter;
-    public readonly RenderRequestStatus: Prometheus.Gauge;
-    public readonly RenderLatency: Prometheus.Histogram;
-    public readonly RenderAttemptLatency: Prometheus.Histogram;
+    public readonly RenderRequestCount: Prometheus.Counter<string>;
+    public readonly RenderRequestByStatusCount: Prometheus.Counter<string>;
+    public readonly RenderRequestByAttemptCount: Prometheus.Counter<string>;
+    public readonly RenderSuccessByAttemptCount: Prometheus.Counter<string>;
+    public readonly RenderRequestStatus: Prometheus.Gauge<string>;
+    public readonly RenderLatency: Prometheus.Histogram<string>;
+    public readonly RenderAttemptLatency: Prometheus.Histogram<string>;
     constructor() {
         this.RenderRequestCount = new Prometheus.Counter({
             help: "Number of page render request.",
@@ -50,7 +50,7 @@ class Metrics {
     }
 }
 
-collectDefaultMetrics({ timeout: 5000 });
+collectDefaultMetrics({ eventLoopMonitoringPrecision: 5000 });
 
 const metrics = new Metrics();
 export default metrics;

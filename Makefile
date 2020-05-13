@@ -9,9 +9,9 @@ REPOSITORY_ROOT := ${CURDIR}
 TOOLCHAIN_DIR = $(REPOSITORY_ROOT)/build/toolchain
 ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
-REGISTRY = jeremyje
+REGISTRY = docker.io/jeremyje
 
-NODEJS_VERSION = 12.16.2
+NODEJS_VERSION = 12.16.3
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
 
 
@@ -74,22 +74,22 @@ push-alpine-image: build-alpine-image
 build-images: build-debian-image build-alpine-image
 
 build-debian-image:
-	docker build -t jeremyje/webcron:$(TAG) -t jeremyje/webcron:$(ALTERNATE_TAG) -f docker-image/debian/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
+	docker build -t $(REGISTRY)/webcron:$(TAG) -t $(REGISTRY)/webcron:$(ALTERNATE_TAG) -f docker-image/debian/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
 
 build-alpine-image:
-	docker build -t jeremyje/webcron:$(TAG)-alpine -t jeremyje/webcron:$(ALTERNATE_TAG)-alpine -f docker-image/alpine/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
+	docker build -t $(REGISTRY)/webcron:$(TAG)-alpine -t $(REGISTRY)/webcron:$(ALTERNATE_TAG)-alpine -f docker-image/alpine/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
 
 clean: clean-images clean-build
 
 clean-images: clean-debian-image clean-alpine-image
 
 clean-debian-image:
-	docker rmi -f jeremyje/webcron:$(TAG)
-	docker rmi -f jeremyje/webcron:$(ALTERNATE_TAG)
+	docker rmi -f $(REGISTRY)/webcron:$(TAG)
+	docker rmi -f $(REGISTRY)/webcron:$(ALTERNATE_TAG)
 
 clean-alpine-image:
-	docker rmi -f jeremyje/webcron-alpine:$(TAG)
-	docker rmi -f jeremyje/webcrona-alpine:$(ALTERNATE_TAG)
+	docker rmi -f $(REGISTRY)/webcron-alpine:$(TAG)
+	docker rmi -f $(REGISTRY)/webcrona-alpine:$(ALTERNATE_TAG)
 
 clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
