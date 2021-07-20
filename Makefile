@@ -11,7 +11,7 @@ ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
 REGISTRY = docker.io/jeremyje
 
-NODEJS_VERSION = 12.16.3
+NODEJS_VERSION = 14.17.3
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
 
 

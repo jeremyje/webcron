@@ -7,7 +7,7 @@ RUN apt-get update \
       libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
       libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
       libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation \
-      libappindicator1 libnss3 lsb-release xdg-utils wget \
+      libappindicator1 libnss3 lsb-release xdg-utils wget libgbm-dev \
       build-essential curl \
   && rm -rf /var/cache/apk/*
 RUN useradd --create-home --home-dir /home/webcron --shell /bin/bash webcron
@@ -34,7 +34,7 @@ ENTRYPOINT ["npm", "run"]
 CMD ["serve"]
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
-    version="2.0.0" \
+    version="3.0.0" \
     description="A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format."
 
 # Standardized Docker Image Labels

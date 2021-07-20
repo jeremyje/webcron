@@ -1,5 +1,5 @@
 import { readFile } from "fs";
-import { safeLoad } from "js-yaml";
+import { load } from "js-yaml";
 import { promisify } from "util";
 
 const readFileAsync = promisify(readFile);
@@ -11,7 +11,7 @@ export async function readConfig(configFile: string): Promise<IConfig[]> {
 }
 
 export function loadConfig(configText: string): IConfig[] {
-    const config = safeLoad(configText) as IConfig[];
+    const config = load(configText) as IConfig[];
     const configs: IConfig[] = [];
     for (const c of config) {
         configs.push(fillConfig(c));

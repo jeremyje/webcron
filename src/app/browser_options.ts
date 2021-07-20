@@ -1,4 +1,4 @@
-import { LoadEvent } from "puppeteer";
+import { PuppeteerLifeCycleEvent } from "puppeteer";
 import { IConfigBrowser } from "./config";
 
 export interface IWebBrowserBatchOptions {
@@ -10,7 +10,7 @@ export interface IWebBrowserOptions {
     formatAndPaths: Map<string, string>;
 }
 
-export function toLoadEvent(name: string): LoadEvent {
+export function toLoadEvent(name: string): PuppeteerLifeCycleEvent {
     switch (name.toLowerCase()) {
         case "domcontentloaded":
             return "domcontentloaded";
