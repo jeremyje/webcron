@@ -113,10 +113,10 @@ export class WebBrowser {
                 }
                 return status;
             }, {
-                    factor: browserOptions.retryFactor,
-                    randomize: true,
-                    retries: browserOptions.attempts,
-                });
+                factor: browserOptions.retryFactor,
+                randomize: true,
+                retries: browserOptions.attempts,
+            });
             success = isSuccessfulHttpCode(status) ? "true" : "false";
         } finally {
             metrics.RenderRequestByAttemptCount.inc({ attempt });
@@ -138,7 +138,7 @@ export class WebBrowser {
             case "text":
                 const text = await page.evaluate(() => document.body.innerText);
                 await asyncWriteFile(filePath, text, {
-                    encoding: options.textEncoding,
+                    encoding: toBufferEncoding(options.textEncoding),
                     flag: "w",
                     mode: 0o660,
                 });
@@ -175,28 +175,54 @@ export class WebBrowser {
     }
 }
 
-function toPDFFormat(format: string): puppeteer.PDFFormat {
+function toPDFFormat(format: string): puppeteer.PaperFormat {
     switch (format.toLowerCase()) {
         case "letter":
-            return "Letter";
+            return "letter";
         case "legal":
-            return "Legal";
+            return "legal";
         case "tabloid":
-            return "Tabloid";
+            return "tabloid";
         case "ledger":
-            return "Ledger";
+            return "ledger";
         case "A0":
-            return "A0";
+            return "a0";
         case "A1":
-            return "A1";
+            return "a1";
         case "A2":
-            return "A2";
+            return "a2";
         case "A3":
-            return "A3";
+            return "a3";
         case "A4":
-            return "A4";
+            return "a4";
         case "A5":
-            return "A5";
-        default: return "A4";
+            return "a5";
+        default: return "a4";
+    }
+}
+
+function toBufferEncoding(format: string): BufferEncoding {
+    switch (format.toLowerCase()) {
+        case "ascii":
+            return "ascii";
+        case "utf8":
+        case "utf-8":
+            return "utf-8";
+        case "utf16le":
+            return "utf16le";
+        case "ucs2":
+        case "ucs-2":
+            return "ucs2";
+        case "base64":
+            return "base64";
+        case "base64url":
+            return "base64url";
+        case "latin1":
+            return "latin1";
+        case "binary":
+            return "binary";
+        case "hex":
+            return "hex";
+        default: return "utf8";
     }
 }

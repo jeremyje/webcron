@@ -1,4 +1,4 @@
-import * as commander from "commander";
+import { Command } from "commander";
 import * as compression from "compression";
 import * as errorHandler from "errorhandler";
 import * as express from "express";
@@ -12,9 +12,9 @@ import rootRouter, { setHomePageContent, setLoadedConfiguration } from "./app/ro
 import { isProduction } from "./app/util";
 import { startWebcron } from "./app/webcron";
 
-function webcronMain(onConfigLoadComplete: (configs: IConfig[]) => void) {
+function webcronMain(args: Command, onConfigLoadComplete: (configs: IConfig[]) => void) {
     (async () => {
-        const configs = await readConfig(commander.config as string);
+        const configs = await readConfig(args.getOptionValue("config") as string);
         startWebcron(configs);
         onConfigLoadComplete(configs);
     })();
@@ -25,30 +25,32 @@ class App {
 
     constructor() {
         this.express = express();
-        this.parseArgs();
-        this.middleware();
+        const args = this.parseArgs();
+        this.middleware(args);
         this.routes();
         this.launchConf();
     }
 
-    private parseArgs(): void {
+    private parseArgs(): Command {
         console.log("Args: " + process.argv);
-        commander
-            .version("1.1.0")
+        const args = new Command();
+        args
+            .version("3.0.0")
             .description("A server that will periodically download web content and store it in "
                 + "text, PDF, JPEG, and PNG format.")
             .option("-c, --config [path]", "Configuration File, defaults to [config.yaml]", "config.yaml")
             .allowUnknownOption()
             .parse(process.argv);
+        return args;
     }
 
-    private middleware(): void {
+    private middleware(args: Command): void {
         this.express.set("port", process.env.PORT || 3000);
         this.express.use(compression());
         this.express.use(logger("dev"));
         this.express.use(lusca.xframe("SAMEORIGIN"));
         this.express.use(lusca.xssProtection(true));
-        webcronMain((configs: IConfig[]) => {
+        webcronMain(args, (configs: IConfig[]) => {
             setLoadedConfiguration(configs);
             const normalizedPaths = [
                 ["^/files/.*", "/files/*"],

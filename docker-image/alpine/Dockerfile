@@ -4,10 +4,21 @@ FROM alpine:latest
 RUN apk update && apk upgrade \
     && echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
     && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
-    && apk add --no-cache chromium@edge nss@edge make curl
+    && apk add --no-cache \
+      chromium \
+      nss \
+      freetype \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont \
+      nodejs \
+      yarn \
+      make \
+      curl
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 RUN addgroup webcron
 RUN adduser -S -s /bin/bash -h /home/webcron webcron
@@ -33,9 +44,8 @@ EXPOSE 3000
 ENTRYPOINT ["npm"]
 CMD ["run", "serve"]
 
-
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
-    version="2.0.0" \
+    version="3.0.0" \
     description="A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format."
 
 # Standardized Docker Image Labels
