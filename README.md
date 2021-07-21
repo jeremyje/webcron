@@ -13,7 +13,7 @@ This service can be run via Docker container (recommended) or by npm.
 
 ```bash
 # Docker (recommended)
-docker run --name webcron --interactive --tty -p 18080:3000 webcron:canary
+docker run --name webcron --interactive --tty -p 18080:3000 jeremyje/webcron:dev
 
 # Manually
 npm run --config=config.yaml
