@@ -30,7 +30,7 @@ function webcronMain(args: Command, onConfigLoadComplete: (configs: IConfig[]) =
     (async () => {
         const configs = await readConfig(args.getOptionValue("config") as string);
         const err = validateConfig(configs);
-        if (err != null) {
+        if (err != undefined) {
             throw err;
         }
         startWebcron(configs);
