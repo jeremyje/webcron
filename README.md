@@ -106,3 +106,16 @@ RestartSec=1
 [Install]
 WantedBy=multi-user.target
 ```
+
+### eslint
+
+```bash
+# Activate environment
+export PATH=$PWD/build/toolchain/nodejs/bin/:$PWD/node_modules/.bin/:$PATH
+# Install eslint
+npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
+npx eslint .
+
+```
+
+_Based on https://typescript-eslint.io/getting-started/_
