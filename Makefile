@@ -75,6 +75,9 @@ node_modules/: build/toolchain/nodejs/
 	$(NPM) install --save
 	$(NPM) install --only=dev
 
+lint: node_modules/
+	$(NPX) eslint .
+
 push-images: push-debian-image push-alpine-image
 
 push-debian-image: build-debian-image
