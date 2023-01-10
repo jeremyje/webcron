@@ -27,6 +27,9 @@ NPX = $(TOOLCHAIN_DIR)/nodejs/bin/npx
 REGISTRY = docker.io/jeremyje
 
 NODEJS_VERSION = 18.13.0
+
+DOCKER = DOCKER_CLI_EXPERIMENTAL=enabled docker
+
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
 
 
@@ -89,13 +92,16 @@ push-alpine-image: build-alpine-image
 	docker push $(REGISTRY)/webcron-alpine:$(TAG)
 	docker push $(REGISTRY)/webcron-alpine:$(ALTERNATE_TAG)
 
-build-images: build-debian-image build-alpine-image
+images: DOCKER_PUSH = --push
+images: debian-image alpine-image
 
-build-debian-image:
-	docker build -t $(REGISTRY)/webcron:$(TAG) -t $(REGISTRY)/webcron:$(ALTERNATE_TAG) -f docker-image/debian/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
+LINUX_PLATFORMS = linux/amd64
 
-build-alpine-image:
-	docker build -t $(REGISTRY)/webcron:$(TAG)-alpine -t $(REGISTRY)/webcron:$(ALTERNATE_TAG)-alpine -f docker-image/alpine/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) .
+debian-image:
+	$(DOCKER) buildx build --platform $(LINUX_PLATFORMS) -t $(REGISTRY)/webcron:$(TAG) -f docker-image/debian/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) . $(DOCKER_PUSH)
+
+alpine-image:
+	$(DOCKER) buildx build --platform $(LINUX_PLATFORMS) -t $(REGISTRY)/webcron:$(TAG)-alpine -f docker-image/alpine/Dockerfile --build-arg BUILD_DATE=$(BUILD_DATE) --build-arg VCS_REF=$(SHORT_SHA) --build-arg BUILD_VERSION=$(VERSION) . $(DOCKER_PUSH)
 
 clean: clean-images clean-build
 
@@ -103,11 +109,9 @@ clean-images: clean-debian-image clean-alpine-image
 
 clean-debian-image:
 	docker rmi -f $(REGISTRY)/webcron:$(TAG)
-	docker rmi -f $(REGISTRY)/webcron:$(ALTERNATE_TAG)
 
 clean-alpine-image:
 	docker rmi -f $(REGISTRY)/webcron-alpine:$(TAG)
-	docker rmi -f $(REGISTRY)/webcrona-alpine:$(ALTERNATE_TAG)
 
 clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
