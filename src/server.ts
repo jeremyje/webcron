@@ -24,11 +24,15 @@ import serveIndex = require("serve-index");
 import { IConfig, readConfig } from "./app/config";
 import rootRouter, { setHomePageContent, setLoadedConfiguration } from "./app/router";
 import { isProduction } from "./app/util";
-import { startWebcron } from "./app/webcron";
+import { startWebcron, validateConfig } from "./app/webcron";
 
 function webcronMain(args: Command, onConfigLoadComplete: (configs: IConfig[]) => void) {
     (async () => {
         const configs = await readConfig(args.getOptionValue("config") as string);
+        const err = validateConfig(configs);
+        if (err != null) {
+            throw err;
+        }
         startWebcron(configs);
         onConfigLoadComplete(configs);
     })();

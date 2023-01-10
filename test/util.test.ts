@@ -99,7 +99,7 @@ test("urlToFilename", async () => {
         util.urlToFilename("http://userver2:8080/server/appdata/swagger/"),
         "userver2_8080_server_appdata_swagger");
     assert.equal(
-        util.urlToFilename("http://user:pass@userver2:8080/ok#$%^&*()@!_-+={}|[]\:;\"'<>,.?/ok"),
+        util.urlToFilename("http://user:pass@userver2:8080/ok#$%^&*()@!_-+={}|[]\\:;\"'<>,.?/ok"),
         "userver2_8080_ok");
     assert.equal(
         util.urlToFilename("https://twitter.com/search?q=news&src=typd&lang=en"),

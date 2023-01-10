@@ -12,12 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { schedule, ScheduledTask } from "node-cron";
+import { schedule, ScheduledTask, validate } from "node-cron";
 import { join } from "path";
 import { WebBrowser } from "./browser";
 import { IWebBrowserOptions } from "./browser_options";
 import { IConfig } from "./config";
 import { urlToFilename } from "./util";
+
+export function validateConfig(configs: IConfig[]): Error {
+    for (const config of configs) {
+        if (!validate(config.schedule)) {
+            return new Error(`Invalid cron schedule '${config.schedule}' in '${config.name}'.`);
+        }
+    }
+    return null;
+}
 
 export function startWebcron(configs: IConfig[]): () => void {
     const taskCollection: ScheduledTask[] = [];
