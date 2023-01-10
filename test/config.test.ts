@@ -66,7 +66,7 @@ function assertTemplateConfig(config: IConfig): void {
   assert.deepEqual(config.browser.attempts, 5);
   assert.deepEqual(config.browser.flags, []);
   assert.deepEqual(config.browser.headless, true);
-  assert.deepEqual(config.browser.height, 1080);
+  assert.deepEqual(config.browser.height, 2160);
   assert.deepEqual(config.browser.output.displayHeaderFooter, false);
   assert.deepEqual(config.browser.output.fullPage, true);
   assert.deepEqual(config.browser.output.landscape, false);
@@ -80,7 +80,7 @@ function assertTemplateConfig(config: IConfig): void {
   assert.deepEqual(config.browser.timeout, 60000);
   assert.deepEqual(config.browser.verbose, true);
   assert.deepEqual(config.browser.waitUntil, "domcontentloaded");
-  assert.deepEqual(config.browser.width, 1920);
+  assert.deepEqual(config.browser.width, 3840);
   assert.deepEqual(config.urls, ["http://www.cnn.com/"]);
   assert.deepEqual(config.servePath, "");
 }

@@ -22,7 +22,7 @@
     attempts: 10
     flags: []
     headless: true
-    height: 1080
+    height: 2160
     output:
       displayHeaderFooter: false
       fullPage: true
@@ -38,7 +38,7 @@
     verbose: true
     # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
     waitUntil: "networkidle2"
-    width: 1920
+    width: 3840
   urls:
     - http://server:11010/index.html
     - http://userver2:8080/server/appdata/swagger/

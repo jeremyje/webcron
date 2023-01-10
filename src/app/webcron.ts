@@ -30,21 +30,24 @@ export function validateConfig(configs: IConfig[]): Error {
 
 export function startWebcron(configs: IConfig[]): () => void {
     const taskCollection: ScheduledTask[] = [];
+    const promises: Promise<IConfig>[] = [];
     for (const config of configs) {
         const task = schedule(config.schedule, () => downloadMain(config));
         taskCollection.push(task);
         if (config.immediateFirstRun) {
-            downloadMain(config);
+            promises.push(downloadMain(config));
         }
     }
-    return () => {
+    return async () => {
         for (const task of taskCollection) {
             task.stop();
         }
+        await Promise.all(promises);
     };
 }
 
 async function downloadMain(config: IConfig) {
+    console.log("Creating browser for: " + config);
     const wr = new WebBrowser();
     try {
         await wr.Open(config.browser);
@@ -68,6 +71,7 @@ async function downloadMain(config: IConfig) {
     } catch (e) {
         console.log("Error: " + e);
     } finally {
+        console.log("CLOSING browser for: " + config);
         await wr.Close();
     }
     return config;

@@ -49,8 +49,9 @@ ARG BUILD_VERSION
 
 COPY --chown=webcron:webcron . .
 RUN make SHORT_SHA=${VCS_REF} clean-build
-RUN make SHORT_SHA=${VCS_REF} build
 RUN make SHORT_SHA=${VCS_REF} test
+RUN make SHORT_SHA=${VCS_REF} lint
+RUN make SHORT_SHA=${VCS_REF} build
 
 ENV PORT 3000
 EXPOSE 3000
@@ -59,7 +60,7 @@ ENTRYPOINT ["npm"]
 CMD ["run", "serve"]
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
-    version="3.0.0" \
+    version="4.0.0" \
     description="A server that will periodically download web content and store it in text, PDF, JPEG, and PNG format."
 
 # Standardized Docker Image Labels
