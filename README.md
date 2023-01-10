@@ -1,6 +1,6 @@
 # Webcron
 
-[![Deploy](https://github.com/jeremyje/webcron/actions/workflows/deploy.yml/badge.svg)](https://github.com/jeremyje/webcron/actions/workflows/deploy.yml)
+[![Continuous Integration](https://github.com/jeremyje/webcron/actions/workflows/ci.yml/badge.svg)](https://github.com/jeremyje/webcron/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=popout-square)](https://github.com/jeremyje/webcron/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release-pre/jeremyje/webcron.svg?style=popout-square)](https://github.com/jeremyje/webcron/releases)
 ![GitHub issues](https://img.shields.io/github/issues/jeremyje/webcron.svg?style=popout-square)
@@ -51,7 +51,8 @@ npm install
     - https://www.youtube.com/feed/trending
 
 ```
-__Example configuration to download what's trending on Twitter and YouTube.__
+
+> _Example configuration to download what's trending on Twitter and YouTube._
 
 ## Run with Docker and Custom Configuration
 
@@ -66,7 +67,7 @@ docker run --name webcron --interactive --tty --publish 8181:3000 --volume $HOME
 
 ## Example Production Configuration Using Docker and Systemd
 
-__install.sh__
+### install.sh
 
 ```bash
 #!/bin/bash
@@ -76,13 +77,13 @@ SERVICE_DIR=/etc/systemd/system/
 chmod 644 *.service
 
 InstallService() {
-	service_file=$1
-	chmod 644 ${service_file}
-	sudo systemctl stop ${service_file}
-	sudo systemctl disable ${service_file}
-	sudo cp -f ${service_file} ${SERVICE_DIR}
-	sudo systemctl enable ${service_file}
-	sudo systemctl start ${service_file}
+  service_file=$1
+  chmod 644 ${service_file}
+  sudo systemctl stop ${service_file}
+  sudo systemctl disable ${service_file}
+  sudo cp -f ${service_file} ${SERVICE_DIR}
+  sudo systemctl enable ${service_file}
+  sudo systemctl start ${service_file}
 }
 
 mkdir -p $HOME/webcron/output
@@ -97,7 +98,7 @@ docker create --name webcron --interactive --tty --publish 8181:3000 --volume ${
 InstallService "webcron.service"
 ```
 
-__webcron.service__
+### webcron.service
 
 ```ini
 [Unit]
@@ -129,4 +130,4 @@ npx eslint .
 
 ```
 
-_Based on https://typescript-eslint.io/getting-started/_
+> _Based on https://typescript-eslint.io/getting-started/_
