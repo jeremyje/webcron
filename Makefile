@@ -12,20 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-BASE_VERSION = 0.0.0-dev
 SHORT_SHA = $(shell git rev-parse --short=7 HEAD | tr -d [:punct:])
-VERSION_SUFFIX = $(SHORT_SHA)
-VERSION = $(BASE_VERSION)-$(VERSION_SUFFIX)
+DIRTY_VERSION = v0.0.0-$(SHORT_SHA)
+VERSION = $(shell git describe --tags || (echo $(DIRTY_VERSION) && exit 1))
 BUILD_DATE = $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 TAG := $(VERSION)
+
 ALTERNATE_TAG := dev
 REPOSITORY_ROOT := ${CURDIR}
 TOOLCHAIN_DIR = $(REPOSITORY_ROOT)/build/toolchain
 ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
+NPX = $(TOOLCHAIN_DIR)/nodejs/bin/npx
 REGISTRY = docker.io/jeremyje
 
-NODEJS_VERSION = 14.17.3
+NODEJS_VERSION = 18.13.0
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
 
 

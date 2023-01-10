@@ -1,7 +1,7 @@
 # Webcron
 
-[![Build Status](https://img.shields.io/travis/com/jeremyje/webcron.svg?style=popout-square)](https://travis-ci.com/jeremyje/webcron)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=popout-square)](https://github.com/jeremyje/webcron/blob/master/LICENSE)
+[![Deploy](https://github.com/jeremyje/webcron/actions/workflows/deploy.yml/badge.svg)](https://github.com/jeremyje/webcron/actions/workflows/deploy.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=popout-square)](https://github.com/jeremyje/webcron/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release-pre/jeremyje/webcron.svg?style=popout-square)](https://github.com/jeremyje/webcron/releases)
 ![GitHub issues](https://img.shields.io/github/issues/jeremyje/webcron.svg?style=popout-square)
 
@@ -9,7 +9,7 @@ A server that will periodically download web content and store it in text, PDF, 
 
 This service can be run via Docker container (recommended) or by npm.
 
-# Running
+## Running
 
 ```bash
 # Docker (recommended)
@@ -19,7 +19,17 @@ docker run --name webcron --interactive --tty -p 18080:3000 webcron:canary
 npm run --config=config.yaml
 ```
 
-# Configuration
+## Development Notes
+
+```bash
+#Upgrade dependencies.
+npm i npm-check-updates
+ncu -u
+npm install
+```
+
+## Configuration
+
 ```yaml
 ---
 - name: "Websites"
@@ -43,7 +53,8 @@ npm run --config=config.yaml
 ```
 __Example configuration to download what's trending on Twitter and YouTube.__
 
-# Run with Docker and Custom Configuration
+## Run with Docker and Custom Configuration
+
 ```bash
 
 mkdir -p $HOME/webcron/output
@@ -53,7 +64,7 @@ cp config.yaml $HOME/webcron/output/config.yaml
 docker run --name webcron --interactive --tty --publish 8181:3000 --volume $HOME/webcron/output:/home/webcron/output jeremyje/webcron:canary serve -- --config=/home/webcron/output/config.yaml
 ```
 
-# Example Production Configuration Using Docker and Systemd
+## Example Production Configuration Using Docker and Systemd
 
 __install.sh__
 

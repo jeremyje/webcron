@@ -30,7 +30,7 @@ export function startWebcron(configs: IConfig[]): () => void {
     }
     return () => {
         for (const task of taskCollection) {
-            task.destroy();
+            task.stop();
         }
     };
 }
