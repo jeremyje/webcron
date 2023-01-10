@@ -70,7 +70,7 @@ class App {
         this.express.use(lusca.xssProtection(true));
         webcronMain(args, (configs: IConfig[]) => {
             setLoadedConfiguration(configs);
-            const normalizedPaths = [
+            const normalizedPaths : promBundle.NormalizePathEntry[] = [
                 ["^/files/.*", "/files/*"],
             ];
 
@@ -87,7 +87,6 @@ class App {
                     hasCorpus = true;
                     const outputDirectory = resolve(config.outputDirectory);
                     const servePath = ("/" + config.servePath.trim() + "/").replace(/\/\//g, "/");
-                    // tslint:disable-next-line:no-console
                     console.log("Serving " + outputDirectory + " via " + servePath);
                     this.express.use(
                         config.servePath,
@@ -129,10 +128,8 @@ class App {
         this.express.use(errorHandler());
         if (isProduction()) {
             this.express.listen(this.express.get("port"), () => {
-                // tslint:disable-next-line:no-console
                 console.log(("  App is running at http://localhost:%d \
       in %s mode"), this.express.get("port"), this.express.get("env"));
-                // tslint:disable-next-line:no-console
                 console.log("  Press CTRL-C to stop\n");
             });
         }
