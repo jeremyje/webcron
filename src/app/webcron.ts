@@ -25,7 +25,7 @@ export function validateConfig(configs: IConfig[]): Error {
             return new Error(`Invalid cron schedule '${config.schedule}' in '${config.name}'.`);
         }
     }
-    return null;
+    return undefined;
 }
 
 export function startWebcron(configs: IConfig[]): () => void {
