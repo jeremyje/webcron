@@ -43,11 +43,9 @@ export class WebBrowser {
             taskList.push(async (callback: any) => {
                 try {
                     await this.renderAsyncSingle(option, options.browser);
-                    // tslint:disable-next-line:no-console
                     console.log("Finished downloading: " + option.targetUrl);
                 }
                 catch (e) {
-                    // tslint:disable-next-line:no-console
                     console.log("Error downloading: " + option.targetUrl + ". Error: " + e);
                 }
                 finally {
@@ -60,7 +58,6 @@ export class WebBrowser {
             await parallelLimit(taskList, options.browser.tabs);
         }
         catch (e) {
-            // tslint:disable-next-line:no-console
             console.log("Error in parallelLimit(). Error: " + e);
         }
     }
@@ -68,7 +65,6 @@ export class WebBrowser {
     private async renderAsyncAttempt(
         targetUrl: string, option: IWebBrowserOptions, browserOptions: IConfigBrowser): Promise<number> {
         let status = 500;
-        // tslint:disable-next-line:no-console
         console.log("renderAsyncAttempt(" + targetUrl + ")");
         const measureAttemptLatency = metrics.RenderAttemptLatency.startTimer();
         try {
@@ -88,7 +84,6 @@ export class WebBrowser {
                 }
             }
             catch (e) {
-                // tslint:disable-next-line:no-console
                 console.log("Error while navigating to " + targetUrl + "\n" + e);
             }
             finally {
@@ -119,7 +114,6 @@ export class WebBrowser {
                 } catch (e) {
                     bail(e);
                     status = 500;
-                    // tslint:disable-next-line:no-console
                     console.log("Caught exception in renderAsyncSingle attempt " + currentAttempt + ": " + e);
                 }
                 if (!isTerminalHttpCode(status)) {
@@ -149,7 +143,7 @@ export class WebBrowser {
     private async renderInternal(page: puppeteer.Page, format: string, filePath: string, options: IOutputOptions) {
         switch (format) {
             case "txt":
-            case "text":
+            case "text": {
                 const text = await page.evaluate(() => document.body.innerText);
                 await asyncWriteFile(filePath, text, {
                     encoding: toBufferEncoding(options.textEncoding),
@@ -157,8 +151,9 @@ export class WebBrowser {
                     mode: 0o660,
                 });
                 break;
+            }
             case "jpg":
-            case "jpeg":
+            case "jpeg": {
                 await page.screenshot({
                     fullPage: options.fullPage,
                     path: filePath,
@@ -166,6 +161,7 @@ export class WebBrowser {
                     type: "jpeg",
                 });
                 break;
+            }
             case "png":
                 await page.screenshot({
                     fullPage: options.fullPage,

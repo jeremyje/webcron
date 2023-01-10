@@ -80,7 +80,7 @@ node_modules/: build/toolchain/nodejs/
 	$(NPM) install --only=dev
 
 lint: node_modules/
-	$(NPX) eslint .
+	$(NPM) run lint
 
 push-images: push-debian-image push-alpine-image
 

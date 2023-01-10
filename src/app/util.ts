@@ -61,9 +61,9 @@ export function urlToFilename(url: string): string {
     const urlParts = new URL(url);
     const strippedUrl = urlParts.host + urlParts.pathname;
     return strippedUrl
-        .replace(/[:\/\\]/g, "_")
+        .replace(/[:/\\]/g, "_")
         .replace(/\//g, "_")
-        .replace(/[\!\@\#\$\%\^\&\*\(\)\=\+\{\}\[\]\|\\]/g, "")
+        .replace(/[!@#$%^&*()=+{}\\]|\\]/g, "")
         .replace(/^_/g, "")
         .replace(/_$/g, "")
         .substring(0, 42)

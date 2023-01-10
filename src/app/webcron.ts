@@ -66,7 +66,6 @@ async function downloadMain(config: IConfig) {
             options,
         });
     } catch (e) {
-        // tslint:disable-next-line:no-console
         console.log("Error: " + e);
     } finally {
         await wr.Close();

@@ -18,7 +18,6 @@ import { promisify } from "util";
 
 const readFileAsync = promisify(readFile);
 export async function readConfig(configFile: string): Promise<IConfig[]> {
-    // tslint:disable-next-line:no-console
     console.log("Reading configuration: " + configFile);
     const configText = await readFileAsync(configFile, { encoding: "utf8" });
     return loadConfig(configText);
@@ -162,7 +161,7 @@ function getDefaultIOutputOptions(): IOutputOptions {
 
 function getOrUndefined(val: any): any {
     if (val) {
-        if (val.hasOwnProperty("length") && val.length === 0) {
+        if (Object.prototype.hasOwnProperty.call(val, "length") && val.length === 0) {
             return undefined;
         }
         return val;
@@ -174,7 +173,7 @@ function getOrDefault(val: any, defaultVal: any): any {
     return getOrUndefined(val) || defaultVal;
 }
 
-function getOrThrow(val: any, error: Error): any {
+function getOrThrow(val: string | string[], error: Error): any {
     const getVal = getOrUndefined(val);
     if (getVal) {
         return getVal;

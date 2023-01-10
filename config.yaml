@@ -15,7 +15,7 @@
 ---
 - name: "Fast Changing News"
   outputDirectory: "/tmp/output/news/"
-  format: ["pdf"]
+  format: ["txt"]
   # https://crontab.guru/every-30-minutes
   schedule: "*/5 * * * *"
   browser:
