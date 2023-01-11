@@ -42,8 +42,8 @@ npm install
     headless: true
     timeout: 60000
     tabs: 3
-    width: 1920
-    height: 1080
+    width: 3840
+    height: 2160
     # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
     waitUntil: "domcontentloaded"
   urls:

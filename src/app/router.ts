@@ -21,9 +21,9 @@ const homePage = (req: Request, res: Response) => {
     res.end(homePageText);
 };
 
-const metrics = (req: Request, res: Response) => {
+const metrics = async (req: Request, res: Response) => {
     res.set("Content-Type", Prometheus.register.contentType);
-    res.end(Prometheus.register.metrics());
+    res.end(await Prometheus.register.metrics());
 };
 
 const config = (req: Request, res: Response) => {

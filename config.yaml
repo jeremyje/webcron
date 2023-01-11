@@ -15,7 +15,7 @@
 ---
 - name: "Fast Changing News"
   outputDirectory: "/tmp/output/news/"
-  format: ["txt"]
+  format: ["text"]
   # https://crontab.guru/every-30-minutes
   schedule: "*/5 * * * *"
   browser:
@@ -23,11 +23,12 @@
     headless: true
     timeout: 60000
     tabs: 3
-    width: 1920
-    height: 1080
+    width: 3840
+    height: 2160
     # https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagegotourl-options
-    waitUntil: "domcontentloaded"
+    waitUntil: "networkidle2"
     verbose: true
   urls:
     - https://twitter.com/search?q=news&src=typd&lang=en
     - https://www.youtube.com/feed/trending
+  servePath: "/fast-news/"

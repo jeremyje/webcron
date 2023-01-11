@@ -16,25 +16,30 @@ import { Command } from "commander";
 import * as compression from "compression";
 import * as errorHandler from "errorhandler";
 import * as express from "express";
-import promBundle = require("express-prom-bundle");
+import * as promBundle from "express-prom-bundle";
 import * as lusca from "lusca";
 import * as logger from "morgan";
 import { resolve } from "path";
-import serveIndex = require("serve-index");
+import * as serveIndex from 'serve-index';
 import { IConfig, readConfig } from "./app/config";
 import rootRouter, { setHomePageContent, setLoadedConfiguration } from "./app/router";
 import { isProduction } from "./app/util";
 import { startWebcron, validateConfig } from "./app/webcron";
 
 function webcronMain(args: Command, onConfigLoadComplete: (configs: IConfig[]) => void) {
-    (async () => {
+    (async () =>  {
+        console.log('-----------');
+        console.log('| Webcron |');
+        console.log('-----------');
+
         const configs = await readConfig(args.getOptionValue("config") as string);
         const err = validateConfig(configs);
         if (err != undefined) {
             throw err;
         }
-        startWebcron(configs);
+        const closeFunc = startWebcron(configs);
         onConfigLoadComplete(configs);
+        return closeFunc;
     })();
 }
 
@@ -53,7 +58,7 @@ class App {
         console.log("Args: " + process.argv);
         const args = new Command();
         args
-            .version("3.0.0")
+            .version("4.0.0")
             .description("A server that will periodically download web content and store it in "
                 + "text, PDF, JPEG, and PNG format.")
             .option("-c, --config [path]", "Configuration File, defaults to [config.yaml]", "config.yaml")
@@ -78,7 +83,7 @@ class App {
             <b><a href="/metrics">/metrics</a></b> - Server Metrics
             <br /><b><a href="/config">/config</a></b> - Server Configuration
             <br />
-            <h3>Corpuses</h3>
+            <h3>Corpora</h3>
             <ul>`;
 
             let hasCorpus = false;

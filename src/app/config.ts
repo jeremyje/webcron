@@ -135,14 +135,14 @@ function getDefaultIConfigBrowser(): IConfigBrowser {
         attempts: 5,
         flags: [],
         headless: true,
-        height: 1080,
+        height: 2160,
         output: getDefaultIOutputOptions(),
         retryFactor: 1.3,
         tabs: 1,
         timeout: 60000,
         verbose: true,
         waitUntil: "domcontentloaded",
-        width: 1920,
+        width: 3840,
     };
 }
 
