@@ -25,3 +25,6 @@ webcron-alpine
 webcron-linux
 webcron-macos
 webcron-win.exe
+
+.terraform/
+.terraform*
