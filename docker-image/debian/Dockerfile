@@ -22,7 +22,7 @@ RUN apt-get update \
       libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
       libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation \
       libappindicator1 libnss3 lsb-release xdg-utils wget libgbm-dev \
-      build-essential curl \
+      build-essential curl tini \
   && rm -rf /var/cache/apk/*
 RUN useradd --create-home --home-dir /home/webcron --shell /bin/bash webcron
 
@@ -44,9 +44,9 @@ RUN make SHORT_SHA=${VCS_REF} build
 
 ENV PORT 3000
 EXPOSE 3000
-
-ENTRYPOINT ["npm", "run"]
-CMD ["serve"]
+ENV PATH="/home/webcron/build/toolchain/nodejs/bin/:$PATH"
+ENTRYPOINT ["/usr/bin/tini-static", "--", "npm"]
+CMD ["run", "serve"]
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \
     version="4.0.0" \
