@@ -28,7 +28,8 @@ RUN apk update && apk upgrade \
       nodejs \
       yarn \
       make \
-      curl
+      curl \
+      tini
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
@@ -56,7 +57,7 @@ RUN make SHORT_SHA=${VCS_REF} build
 ENV PORT 3000
 EXPOSE 3000
 
-ENTRYPOINT ["npm"]
+ENTRYPOINT ["/sbin/tini", "--", "/home/webcron/build/toolchain/nodejs/bin/npm"]
 CMD ["run", "serve"]
 
 LABEL maintainer="Jeremy Edwards <jeremyje@gmail.com>" \

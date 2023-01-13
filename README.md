@@ -63,6 +63,9 @@ mkdir -p $HOME/webcron/output
 cp config.yaml $HOME/webcron/output/config.yaml
 # NOTE: Don't change /home/webcron/output/config.yaml path. It is the mounted path of the file inside of the container. 
 docker run --name webcron --interactive --tty --publish 8181:3000 --volume $HOME/webcron/output:/home/webcron/output jeremyje/webcron:canary serve -- --config=/home/webcron/output/config.yaml
+
+# Run the container using a specific version of webcron.
+docker rm -f webcron; docker run --name webcron --interactive --tty --publish 8181:3000 --volume $PWD/config.yaml:/home/webcron/config.yaml --volume $PWD/output:/tmp/output/news/ docker.io/jeremyje/webcron:v0.0.0-df10bb3 run serve -- --config=/home/webcron/config.yaml
 ```
 
 ## Example Production Configuration Using Docker and Systemd
