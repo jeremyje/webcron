@@ -25,6 +25,9 @@ webcron-alpine
 webcron-linux
 webcron-macos
 webcron-win.exe
+webcron.exe
+
+release.tar.gz
 
 .terraform/
 .terraform*

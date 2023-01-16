@@ -24,6 +24,7 @@ TOOLCHAIN_DIR = $(REPOSITORY_ROOT)/build/toolchain
 ARCHIVES_DIR = $(REPOSITORY_ROOT)/build/archives
 NPM = $(TOOLCHAIN_DIR)/nodejs/bin/npm
 NPX = $(TOOLCHAIN_DIR)/nodejs/bin/npx
+TAR = tar
 REGISTRY = docker.io/jeremyje
 
 NODEJS_VERSION = 18.13.0
@@ -31,7 +32,6 @@ NODEJS_VERSION = 18.13.0
 DOCKER = DOCKER_CLI_EXPERIMENTAL=enabled docker
 
 export PATH := $(REPOSITORY_ROOT)/node_modules/.bin/:$(TOOLCHAIN_DIR)/nodejs/bin:$(PATH)
-
 
 ifeq ($(OS),Windows_NT)
 	NODEJS_PACKAGE = https://nodejs.org/dist/v$(NODEJS_VERSION)/node-v$(NODEJS_VERSION)-win-x64.zip
@@ -52,19 +52,32 @@ all: build build-images
 
 presubmit: clean build test build-debian-image
 
+BINARIES = webcron-alpine webcron webcron.exe
 build: dist/ binaries
-binaries: webcron-alpine webcron-linux
+binaries: $(BINARIES)
+
+release.tar.gz: $(BINARIES) LICENSE
+	$(TAR) -I 'gzip -9' -cf $@ $(BINARIES) LICENSE
+	touch $@
 
 webcron-alpine: dist/
 	$(NPM) install pkg
-	pkg . --targets=alpine
+	pkg . --targets=alpine --output=$@
+	touch $@
 
-webcron-linux: dist/
+webcron: dist/
 	$(NPM) install pkg
-	pkg . --targets=linux
+	pkg . --targets=linux --output=$@
+	touch $@
+
+webcron.exe: dist/
+	$(NPM) install pkg
+	pkg . --targets=windows --output=$@
+	touch $@
 
 dist/: node_modules/
 	$(NPM) run build
+	touch $@
 
 test: node_modules/
 	NODE_ENV=test $(NPM) run test
@@ -77,7 +90,8 @@ node_modules/: build/toolchain/nodejs/
 	-which npm
 	echo $(PATH)
 	$(NPM) install --save
-	$(NPM) install --only=dev
+#	$(NPM) install --only=dev
+	touch $@
 
 lint: node_modules/
 	$(NPM) run lint
@@ -108,19 +122,21 @@ clean: clean-images clean-build
 clean-images: clean-debian-image clean-alpine-image
 
 clean-debian-image:
-	docker rmi -f $(REGISTRY)/webcron:$(TAG)
+	-$(DOCKER) rmi -f $(REGISTRY)/webcron:$(TAG)
 
 clean-alpine-image:
-	docker rmi -f $(REGISTRY)/webcron-alpine:$(TAG)
+	-$(DOCKER) rmi -f $(REGISTRY)/webcron-alpine:$(TAG)
 
 clean-build: clean-toolchain clean-archives clean-node
 	rm -rf $(REPOSITORY_ROOT)/build/
 
 clean-binaries:
+	rm -f webcron
 	rm -f webcron-linux
 	rm -f webcron-alpine
 	rm -f webcron-macos
-	rm -f webcron-win.exe
+	rm -f webcron.exe
+	rm -f release.tar.gz
 
 clean-toolchain:
 	rm -rf $(TOOLCHAIN_DIR)
